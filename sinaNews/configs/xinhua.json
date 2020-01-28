@@ -1,0 +1,115 @@
+{
+  "spider": "sina",
+  "website": "新华网",
+  "type": "新闻",
+  "index": "http://qc.wa.news.cn/nodeart/list",
+  "settings": {
+    "USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+  },
+  "start_urls": [
+    {
+      "start_requests_type": "api",
+      "max_num_per_page": 50,
+      "json_formatter": [
+        {
+          "method": "lstrip",
+          "args": [
+            "("
+          ]
+        },
+        {
+          "method": "rstrip",
+          "args": [
+            ")"
+          ]
+        }
+      ],
+      "template_url": "http://qc.wa.news.cn/nodeart/list?nid={}&pgnum={}&cnt={}&tp=1&orderby=1",
+      "classifies": [
+        113352,
+        11147664,
+        11145724,
+        113321,
+        113207
+      ],
+      "type": "dynamic",
+      "method": "xinhua",
+      "start_end": [
+        1,
+        2
+      ]
+    }
+  ],
+  "allowed_domains": [
+    "/"
+  ],
+  "rules": "xinhua",
+  "start_item": {
+    "class": "XinhuaNewsInfos",
+    "data_types": [
+      "data",
+      "list"
+    ],
+    "loader": "XinhuaNewsInfoLoader",
+    "attrs": {
+      "NodeId": {
+        "map": "classify",
+        "method": "reach_to_news_list"
+      },
+      "Title": {
+        "map": "title",
+        "method": "reach_to_news_list"
+      },
+      "LinkUrl": {
+        "map": "url",
+        "method": "reach_to_news_list"
+      },
+      "PubTime": {
+        "map": "time",
+        "method": "reach_to_news_list"
+      },
+      "Abstract": {
+        "map": "intro",
+        "method": "reach_to_news_list"
+      },
+      "keyword": {
+        "map": "keywords",
+        "method": "reach_to_news_list"
+      },
+      "SourceName": {
+        "map": "media_name",
+        "method": "reach_to_news_list"
+      },
+      "Editor": {
+        "map": "editor",
+        "method": "reach_to_news_list"
+      },
+      "Author": {
+        "map": "author",
+        "method": "reach_to_news_list"
+      }
+    }
+  },
+  "detail_item": {
+    "class": "XinhuaText",
+    "loader": "XinhuaTextLoader",
+    "attrs": {
+      "url": [
+        {
+          "method": "attr",
+          "args": [
+            "url"
+          ]
+        }
+      ],
+      "text": [
+        {
+          "method": "xpath",
+          "args": [
+            "//*[@id='p-detail' or @id='content']//p//text()"
+          ]
+        }
+      ]
+    }
+  }
+}

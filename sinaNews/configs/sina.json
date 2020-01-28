@@ -1,0 +1,101 @@
+{
+  "spider": "sina",
+  "website": "新浪新闻",
+  "type": "新闻",
+  "index": "https://feed.mix.sina.com.cn/api/roll/",
+  "settings": {
+    "USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+  },
+  "start_urls": [
+    {
+      "说明": "api模式(接口请求数据)下，以下所有参数都需要（从index页面解析数据的方式还未编写）",
+      "start_requests_type": "api",
+      "json_formatter": [],
+      "max_num_per_page": 50,
+      "template_url": "https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid={}&k=&num={}&page={}&r={}",
+      "classifies": [
+        2510,
+        2511,
+        2669,
+        2512,
+        2513,
+        2514,
+        2515,
+        2516,
+        2517,
+        2518
+      ],
+      "type": "dynamic",
+      "/":"url构造方法"
+      "method": "sina",
+      "//":"开始页和结束页",
+      "start_end": [
+        1,
+        2
+      ]
+    }
+  ],
+  "allowed_domains": [
+    "/"
+  ],
+  "/":"rules暂未使用，从index页面中解析需要用到",
+  "rules": "sina",
+  "start_item": {
+    "class": "SinaNewsInfos",
+    "/":"一直循环到内部的news list",
+    "data_types": [
+      "result",
+      "data"
+    ],
+    "loader": "SinaNewsInfoLoader",
+    "//":"attr各字段是api接口中的key，map对应于数据库中的字段",
+    "attrs": {
+      "lid": {
+        "map": "classify"
+      },
+      "title": {
+        "map": "title"
+      },
+      "url": {
+        "map": "url"
+      },
+      "ctime": {
+        "map": "time"
+      },
+      "wapurl": {
+        "map": "wapurl"
+      },
+      "intro": {
+        "map": "intro"
+      },
+      "keywords": {
+        "map": "keywords"
+      },
+      "media_name": {
+        "map": "media_name"
+      }
+    }
+  },
+  "detail_item": {
+    "class": "SinaText",
+    "loader": "SinaTextLoader",
+    "attrs": {
+      "url": [
+        {
+          "method": "attr",
+          "args": [
+            "url"
+          ]
+        }
+      ],
+      "text": [
+        {
+          "method": "xpath",
+          "args": [
+            "//*[@id='article' or @id='artibody']//p//text()"
+          ]
+        }
+      ]
+    }
+  }
+}
